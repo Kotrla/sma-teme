@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_test_list"
+        android:layout_width="match_parent"
+        android:layout_height="427dp" />
+
+    <EditText
+        android:id="@+id/eText"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="440dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:text="sterge"
+        android:id="@+id/stergeButton"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="560dp"
+        android:text="adauga"
+        android:id="@+id/adaugaButton"
+        />
+</RelativeLayout>
