@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "406520435334",
+    "firebase_url": "https://smaex-b2614.firebaseio.com",
+    "project_id": "smaex-b2614",
+    "storage_bucket": "smaex-b2614.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406520435334:android:0d353531fe05b24b8b3707",
+        "android_client_info": {
+          "package_name": "com.example.app20112020"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406520435334-lontpi72uf9rve9q9rm4mjejt74aj2dj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app20112020",
+            "certificate_hash": "651a32b17b806925b48e3ea8417e239177bceff3"
+          }
+        },
+        {
+          "client_id": "406520435334-d9hq0b804s30kataqmadsh7idi5vmed4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1ESZs81abm483sdhTYiX91b00D3tKdGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406520435334-d9hq0b804s30kataqmadsh7idi5vmed4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

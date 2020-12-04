@@ -1,0 +1,38 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+<EditText
+    android:hint="email"
+    android:layout_alignParentTop="true"
+    android:id="@+id/edEm"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"></EditText>
+    <EditText
+        android:hint="password"
+        android:layout_marginTop="70dp"
+        android:id="@+id/edPw"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        tools:ignore="UnknownId"></EditText>
+    <Button
+        android:text="log in"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:id="@+id/BtnLog"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"></Button>
+    <Button
+        android:text="register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="210dp"
+        android:id="@+id/BtnReg"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"></Button>
+
+</RelativeLayout>
