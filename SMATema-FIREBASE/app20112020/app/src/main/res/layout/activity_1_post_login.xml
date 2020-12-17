@@ -24,28 +24,24 @@
         android:text="Go"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="140dp"
-        android:id="@+id/BtnPotGo"
+        android:id="@+id/BtnPostGo"
         android:layout_width="wrap_content"
         android:layout_height="70dp"></Button>
 
-    <ImageView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="240dp"
-        android:id="@+id/imgview"
-        />
+        android:layout_height="500dp"
+        android:layout_marginTop="220dp"
+        android:padding="10dp"
+        android:id="@+id/postListView"
+        ></ListView>
+
     <Button
-        android:text="Choose"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="650dp"
-        android:id="@+id/btnchoose"
+        android:text="Image"
+        android:layout_marginTop="140dp"
+        android:id="@+id/BtnPostImage"
         android:layout_width="wrap_content"
         android:layout_height="70dp"></Button>
-    <Button
-        android:text="Upload"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="720dp"
-        android:id="@+id/btnupload"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"></Button>
+
+
 </RelativeLayout>

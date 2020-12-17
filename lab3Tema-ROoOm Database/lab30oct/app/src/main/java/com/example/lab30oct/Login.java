@@ -3,6 +3,7 @@ package com.example.lab30oct;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.service.autofill.UserData;
 import android.view.View;
@@ -14,6 +15,7 @@ public class Login extends AppCompatActivity {
 
     EditText userId, password;
     Button login;
+    private SharedPreferences preferences;
 
 
     @Override
@@ -26,6 +28,12 @@ public class Login extends AppCompatActivity {
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
 
+        preferences=this.getSharedPreferences("login",this.MODE_PRIVATE);
+        String uid=preferences.getString("uid", "");
+        String pass=preferences.getString("pass", "");
+
+        userId.setText(uid);
+        password.setText(pass);
 
         login.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -54,6 +62,12 @@ public class Login extends AppCompatActivity {
                                 });
 
                             }else {
+                                SharedPreferences.Editor ed=preferences.edit();
+
+                                ed.putString("uid",userIdText);
+                                ed.putString("pass",passwordText);
+
+                                ed.commit();
 
                                 String name = userEntity.name;
                                 startActivity(new Intent(

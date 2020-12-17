@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,10 +18,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
-    EditText edEm, edPw;
-    Button btnLog, btnReg;
+    private EditText edEm, edPw;
+    private Button btnLog, btnReg;
 
 
     @Override
@@ -57,34 +58,35 @@ public class MainActivity extends AppCompatActivity {
 
     public void authenticateUser(){
 
-        String email = edEm.getText().toString().trim();
+        String email = edEm.getText().toString();
         String password = edPw.getText().toString();
 
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(getApplicationContext(), "Please enter an email address!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(getApplicationContext(), "Please enter the password!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-
-                                            // Sign in success, update UI with the signed-in user's information
-                                            Toast.makeText(MainActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
-
-                                            Intent go = new Intent(MainActivity.this, activity_1_post_login.class);
-                                            startActivity(go);
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
 
 
-                                        } else {
-                                            // If sign in fails, display a message to the user.
-                                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, activity_1_post_login.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Login failed! Please try again later", Toast.LENGTH_LONG).show();
 
-                                            // ...
-                                        }
-
-                                        // ...
-                                    }
-                                });
+                        }
+                    }
+                });
 
     }
 

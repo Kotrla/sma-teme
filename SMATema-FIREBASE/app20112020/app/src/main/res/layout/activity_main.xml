@@ -18,8 +18,7 @@
         android:layout_marginTop="70dp"
         android:id="@+id/edPw"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        tools:ignore="UnknownId"></EditText>
+        android:layout_height="60dp"></EditText>
     <Button
         android:text="log in"
         android:layout_centerHorizontal="true"

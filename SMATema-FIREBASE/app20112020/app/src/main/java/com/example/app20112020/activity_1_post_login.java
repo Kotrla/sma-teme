@@ -1,140 +1,106 @@
 package com.example.app20112020;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
 
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Tag;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class activity_1_post_login extends AppCompatActivity {
 
-    EditText edPostName, edPostAnimal;
-    Button BtnPotGo;
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
-
-    public Uri imguri;
-
-    Button ch, up;
-    ImageView img;
-    StorageReference mStorageRef;
+    private EditText edPostName, edPostAnimal;
+    private Button BtnPostGo, BtnPostImage;
+    private ListView postListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_1_post_login);
         edPostName = findViewById(R.id.edPostName);
         edPostAnimal = findViewById(R.id.edPostAnimal);
-        BtnPotGo = findViewById(R.id.BtnPotGo);
+        BtnPostGo = findViewById(R.id.BtnPostGo);
+        BtnPostImage = findViewById(R.id.BtnPostImage);
+        postListView = findViewById(R.id.postListView);
 
-        ch = findViewById(R.id.btnchoose);
-        up = findViewById(R.id.btnupload);
-        img = findViewById(R.id.imgview);
-
-
-        mStorageRef = FirebaseStorage.getInstance().getReference("Images");
-
-        ch.setOnClickListener(new View.OnClickListener() {
+        BtnPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                filechooser();
-            }
-        });
-
-        up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fileuploader();
-            }
-        });
-
-        onClickers();
-
-    }
-
-    private String getExtension(Uri uri) {
-
-        ContentResolver cr = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
-    }
-
-    public void Fileuploader() {
-
-        StorageReference Ref = mStorageRef.child(System.currentTimeMillis() + "." + getExtension(imguri));
-
-        Ref.putFile(imguri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get a URL to the uploaded content
-                        //  Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                        Toast.makeText(activity_1_post_login.this, "Image uploaded", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        // ...
-                    }
-                });
-
-
-    }
-
-    public void filechooser() {
-
-        Intent intent = new Intent();
-        intent.setType("image/'");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imguri = data.getData();
-            img.setImageURI(imguri);
-        }
-    }
-
-
-    public void onClickers(){
-        BtnPotGo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String name = edPostName.getText().toString().trim();
-                String animalE = edPostAnimal.getText().toString().trim();
-
-                rootNode = FirebaseDatabase.getInstance();
-                reference = rootNode.getReference("animale");
-               AnimaleHelperClass animal = new AnimaleHelperClass(name,animalE);
-
-
-                reference.setValue(animal);
+                Intent intent = new Intent(activity_1_post_login.this,MainActivity2.class);
+                startActivity(intent);
             }
         });
 
 
+        BtnPostGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = edPostName.getText().toString();
+                String animal = edPostAnimal.getText().toString();
+
+                edPostName.setText("");
+                edPostAnimal.setText("");
+
+                HashMap<String , Object> map = new HashMap<>();
+                map.put("Name",name);
+                map.put("Animal",animal);
+
+                FirebaseDatabase.getInstance().getReference().child("animale").push().setValue(map);
+
+
+            }
+        });
+
+
+        final ArrayList<String> list = new ArrayList<>();
+        final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.list_item, list);
+        postListView.setAdapter(adapter);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("animale");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    list.add(snapshot.getValue().toString());
+
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
+
 }

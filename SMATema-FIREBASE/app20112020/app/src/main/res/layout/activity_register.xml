@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-    <EditText
-        android:hint="name"
-        android:layout_alignParentTop="true"
-        android:id="@+id/edNameReg"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"></EditText>
 
     <EditText
         android:hint="emailReg"
